@@ -5,12 +5,12 @@ from .models import Book
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ["title", "author", "publication_date"]
-    list_filter = ["title", "author"]
-    search_fields = ["title", "author"]
-    ordering = ["publication_date"]
+    list_display = ["title", "author", "publication_year"]
+    list_filter = ["title", "author", "publication_year"]
+    search_fields = ["title", "author", "publication_year"]
+    ordering = ["publication_year"]
     fieldsets = (
         (None, {
-            "fields": ("title", "author", "publication_date")
+            "fields": ("title", "author", "publication_year")
         }),
     )
