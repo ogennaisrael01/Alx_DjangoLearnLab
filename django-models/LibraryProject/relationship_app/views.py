@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from.models import  Book
 from .models import Library
 from django.views.generic import DetailView, ListView
@@ -20,7 +20,14 @@ class LibraryDetailView(ListView):
     template_name = "relationship_app/library_detail.html"
     context_object_name = "library"
 
-class SignUpView(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "relationship_app/register.html"
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+    else:
+        form = UserCreationForm
+    return render(request, "relationship_app/register.html", {
+        "form":form
+    })
