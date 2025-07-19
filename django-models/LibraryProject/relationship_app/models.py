@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class UserProfile(models.Model):
-    ROLE_STATUS = [
-        ("ADMIN", "admmin"),
-        ("LIBRARIAN", "librerian"),
-        ("MEMBER", "member"),
+    ROLE_CHOICES = [
+        ("Admin", "Admin"),
+        ("Librarian", "Librarian"),
+        ("Member", "Member"),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=100, choices=ROLE_STATUS, null=False)
+    role = models.CharField(max_length=100, choices=ROLE_CHOICES, null=False)
     
     def __str__(self):
         return self.user.username
