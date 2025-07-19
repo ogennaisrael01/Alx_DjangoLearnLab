@@ -13,5 +13,5 @@ def list_books():
         print(book)
 
 def retrieve_liberian(name):
-    liberian = Librarian.objects.select_related('library')
+    liberian = Librarian.objects.get(name=name).select_related('library')
     print(liberian)
