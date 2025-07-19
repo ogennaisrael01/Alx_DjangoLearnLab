@@ -5,11 +5,11 @@ from django.views.generic import ListView
 
 def all_books(request):
     books = Book.objects.all()
-    return render(request, "book_list.html", {
+    return render(request, "relationship_app/list_books.html", {
         "books":books
     })
 
 class LibraryDetail(ListView):
     model = Library
-    template_name = "library_detail.html"
+    template_name = "relationship_app/ibrary_detail.html"
     context_object_name = "library"
