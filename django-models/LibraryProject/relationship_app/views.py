@@ -7,10 +7,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, permission_required
 
 # Create your views here.
-
 def list_books(request):
     books = Book.objects.all()
     return render(request, "relationship_app/book_list.html", {
@@ -53,3 +52,15 @@ def is_member(user):
 @user_passes_test
 def member_view(request):
     return render(request, "relationship_app/member_view.html")
+
+@permission_required("relationship_app.can_add_book", raise_exception=True)
+def add_book(request):
+    return render(request,)
+
+@permission_required("relationship_app.can_edit_book", raise_exception=True)
+def edit_book(request):
+    return render(request)
+
+@permission_required("relationship_app.can_delete_book")
+def delete_book(request):
+    return render(request)
