@@ -27,7 +27,7 @@ def register(request):
             form.save()
             return redirect("login")
     else:
-        form = UserCreationForm
+        form = UserCreationForm()
     return render(request, "relationship_app/register.html", {
         "form":form
     })
