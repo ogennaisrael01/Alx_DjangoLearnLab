@@ -23,7 +23,6 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
         
-
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, max_length=200, null=False, blank=False)
     password = models.CharField(max_length=50, name="password")
