@@ -24,25 +24,10 @@ class UserManager(BaseUserManager):
         return user
         
 class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True, max_length=200, null=False, blank=False)
-    password = models.CharField(max_length=50, name="password")
     date_of_birth = models.DateField(blank=True, null=True, max_length=200)
     profile_photo = models.ImageField(verbose_name="profile picture", blank=True, null=True)
-    is_superuser = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=200, default="First name", null=True, blank=True)
-    last_name = models.CharField(max_length=200, default="Last name", null=True, blank=True)
 
-    objects = UserManager()
-    EMAIL_FIELD = "email"
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
 
-    def __str__(self):
-        return self.get_username()
-    @property
-    def is_staff(self):
-        return self.is_admin
 
 class UserProfile(models.Model):
     ROLE_CHOICES = [
