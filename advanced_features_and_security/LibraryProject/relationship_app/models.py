@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import get_user_model
 
@@ -24,11 +24,11 @@ class UserManager(BaseUserManager):
         return user
         
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, max_length=200, null=False, blank=False)
     password = models.CharField(max_length=50, name="password")
     date_of_birth = models.DateField(blank=True, null=True, max_length=200)
-    profile_picture = models.ImageField(verbose_name="profile picture", blank=True, null=True)
+    profile_photo = models.ImageField(verbose_name="profile picture", blank=True, null=True)
     is_superuser = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     first_name = models.CharField(max_length=200, default="First name", null=True, blank=True)
