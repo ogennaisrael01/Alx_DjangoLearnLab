@@ -6,8 +6,8 @@ from django.contrib.auth.admin import UserAdmin
 
 class CustomUserAdmin(UserAdmin):
   model = CustomUser
-  list_display = ("email", "is_admin", "is_active")
-  list_filter = ("email", "is_admin", "is_active") 
+  list_display = ("email", "is_admin")
+  list_filter = ("email", "is_admin") 
   search_fields = ["email"]
   filter_horizontal = ['groups', 'user_permissions']
   ordering = ["email"]
