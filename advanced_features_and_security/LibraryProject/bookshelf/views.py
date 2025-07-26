@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import CustomUser, Book
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import  HttpResponse
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterFrom
-from django.contrib.auth.forms import UserCreationForm
+from .forms import ExampleFrom
 # Create your views here.
 
 @permission_required("bookshelf.can_edit_books", raise_exception=True)
@@ -17,14 +16,14 @@ def book_list(request):
 def register(request):
     try:
         if request.method == "POST":
-            form  = RegisterFrom(request.POST)
+            form  = ExampleFrom(request.POST)
             if form.is_valid() and form.validate_password(form.cleaned_data["password"]):
                 request.save()
                 return redirect("books")
         else:
-            form = RegisterFrom()
+            form = ExampleFrom()
 
-    except RegisterFrom.errors as e:
+    except ExampleFrom.errors as e:
         return f"Error {e}"
     return render(request, "bookshelf/register.html", context={"form": form})
 
