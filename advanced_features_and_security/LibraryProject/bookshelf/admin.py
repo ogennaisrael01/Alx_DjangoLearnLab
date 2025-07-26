@@ -5,9 +5,14 @@ from django.contrib.auth.admin import UserAdmin
 
 
 class CustomUserAdmin(UserAdmin):
-  list_display = ["email", "is_staff", "is_active"]
-  list_filter = ["email", "is_staff", "is_active"]  
-  fieldsets = ["is_active", "email", "is_staff"]
+  model = CustomUser
+  list_display = ("email", "is_admin", "is_active")
+  list_filter = ("email", "is_admin", "is_active") 
+  search_fields = ["email"]
+  filter_horizontal = ['groups', 'user_permissions']
+  ordering = ["email"]
+  readonly_fields = ["date_joined"]
+
 
 admin.site.register(CustomUser, CustomUserAdmin)
 
