@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
-@permission_required("bookshelf.can_edit_books")
-def list_books(request):
+@permission_required("bookshelf.can_edit_books", raise_exception=True)
+def books_list(request):
     books = Book.objects.all()
     if books is None:
         return HttpResponse("NO Books")
