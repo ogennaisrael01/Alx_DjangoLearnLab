@@ -19,6 +19,6 @@ class BookViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=400)
     
     def get_queryset(self):
-        queryset = self.queryset
+        queryset = self.get_queryset()
         return queryset.objects.all()
 
