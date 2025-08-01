@@ -7,5 +7,5 @@ routers.register("book_list", BookViewSet, basename="book_list")
 
 # include all URL for the BookViewSet (CRUD)
 urlpatterns = [
-    path("", include(routers.urls))
+    path("", include("router.urls"))
 ]
