@@ -40,14 +40,16 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'rest_framework',
     "rest_framework.authtoken"
-    
 ]
-
-DEFAULT_AUTHENTICATION_CLASSES = [
-    'rest_framework.authentication.BasicAuthentication',
-    'rest_framework.authentication.TokenAuthentication',
-]
-
+REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authenticaton.TokenAuthentication",
+            "rest_framework.authentication.BasicAuthentication",
+        ],
+        "DEFAULT_PERMISSION_CLASSES": [
+            "rest_framework.permissions.IsAthenticated"
+        ]
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
