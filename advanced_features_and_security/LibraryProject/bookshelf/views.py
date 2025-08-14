@@ -4,6 +4,9 @@ from .models import CustomUser, Book
 from django.http import  HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import ExampleForm
+from django.views import generic
+from rest_framework import request, response
+
 # Create your views here.
 
 @permission_required("bookshelf.can_edit_books", raise_exception=True)
@@ -18,7 +21,7 @@ def register(request):
         if request.method == "POST":
             form  = ExampleForm(request.POST)
             if form.is_valid() and form.validate_password(form.cleaned_data["password"]):
-                request.save()
+                form.save()
                 return redirect("books")
         else:
             form = ExampleForm()
