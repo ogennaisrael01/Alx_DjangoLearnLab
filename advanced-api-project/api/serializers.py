@@ -3,7 +3,7 @@ from api.models import Author, Book
 from django.utils import timezone
 
 
-class BookSerializer(serializers.Serializer):
+class BookInputSerializer(serializers.Serializer):
     """ Serializer for the Book model. """
     author = serializers.PrimaryKeyRelatedField(queryset=Author.objects.all()) # ForeignKey to Author model
     title = serializers.CharField(max_length=100)
@@ -27,6 +27,10 @@ class BookSerializer(serializers.Serializer):
             raise serializers.ValidationError(" Publication year can't be greater than today")
         return value
 
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ["id", "title", "author", "publication_year"]
 
 class AuthorSerializer(serializers.ModelSerializer):
     """ Serializer for the Author model. """
@@ -34,4 +38,4 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Author
-        fields = ["name", "books"]
+        fields = ["name", "books", "id"]
