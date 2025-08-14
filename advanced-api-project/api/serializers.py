@@ -22,9 +22,10 @@ class BookInputSerializer(serializers.Serializer):
         return instance
     
     def validate_publication_year(self, value):
-        """ Validate that the publication year is not greater than the current year. """
-        if value > timezone.datetime.today().year():
-            raise serializers.ValidationError(" Publication year can't be greater than today")
+        """Validate that the publication year is not greater than the current year."""
+        current_year = timezone.now().year
+        if value > current_year:
+            raise serializers.ValidationError("Publication year can't be in the future.")
         return value
 
 class BookSerializer(serializers.ModelSerializer):
@@ -32,9 +33,16 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = ["id", "title", "author", "publication_year"]
 
+    def validate_publication_year(self, value):
+        """Validate that the publication year is not greater than the current year."""
+        current_year = timezone.now().year
+        if value > current_year:
+            raise serializers.ValidationError("Publication year can't be in the future.")
+        return value
+
 class AuthorSerializer(serializers.ModelSerializer):
     """ Serializer for the Author model. """
-    books = BookSerializer(many=True, read_only=True)
+    books = BookInputSerializer(many=True, read_only=True)
 
     class Meta:
         model = Author
