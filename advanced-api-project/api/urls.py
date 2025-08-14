@@ -2,6 +2,8 @@ from django.urls import path
 from api.views import AuthorView, ListView, CreateView, DeleteView, UpdateView, DetialView
 
 urlpatterns = [
+    """ API endpoints for the Book and Author resources """,
+    
     path("authors/", AuthorView.as_view(), name="author"),
     path('books/', ListView.as_view(), name="list-book"),
     path('book/<int:pk>/', DetialView.as_view(), name="detail-view"),
