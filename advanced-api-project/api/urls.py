@@ -2,7 +2,7 @@ from django.urls import path
 from api.views import AuthorView, DetailView, ListView, CreateView, DeleteView, UpdateView
 
 urlpatterns = [
-    """ API endpoints for the Book and Author resources """,
+    # /API endpoints for the Book and Author resources
 
     path("authors/", AuthorView.as_view(), name="author"),
     path('books/', ListView.as_view(), name="list-book"),
