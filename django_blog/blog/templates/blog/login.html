@@ -5,6 +5,10 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form action="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
 </body>
 </html>
