@@ -15,7 +15,7 @@
         {% if blogs %}
             {% for post in blogs %}
                 <div style="background:#181818; border-radius:12px; margin-bottom:24px; padding:18px; text-align:left;">
-                    <h2 style="color:#3578e5; margin-bottom:8px;"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                    <h2 style="color:#3578e5; margin-bottom:8px;"><a href="{% url 'blog-detail' post.id %}">{{ post.title }}</a></h2>
                     {% if post.image %}
                         <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width:100%; border-radius:8px; margin-bottom:12px;">
                     {% endif %}

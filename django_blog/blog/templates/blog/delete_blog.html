@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Blog | Django Blog{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-card">
+        <div class="profile-banner"></div>
+        <div class="form-title" style="margin-bottom: 0;">Delete Blog Post</div>
+        <p style="color:#fff; font-size:1.15em; margin-bottom:24px;">
+            Are you sure you want to delete <strong>{{ blogs.title }}</strong>?
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" style="background:#e53e3e; color:#fff; font-weight:600; padding:12px 0; border-radius:8px; border:none; width:90%; margin-bottom:12px;">
+                Yes, Delete
+            </button>
+        </form>
+        <div class="extra">
+            <a href="{% url 'blog-detail' blogs.id %}">Cancel</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from blog.forms import RegisterForm, CreatePostForm
+from django.urls import reverse
 from django.views import generic
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +10,8 @@ from blog.models import Post
 User = get_user_model()
 # Create your views here.
 
+def home(request):
+    return render(request, "blog/home.html")
 
 def register(request):
     """ register and save user is user credentials are valid"""
@@ -45,7 +48,8 @@ class BlogCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
     form_class = CreatePostForm
     template_name = "blog/create_post.html"
-    success_url = "blogs"
+    
+    
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -56,10 +60,15 @@ class BlogCreateView(LoginRequiredMixin, generic.CreateView):
         context['user'] = self.request.user
         return context
     
+    def get_success_url(self):
+        return reverse("blogs")
+    
+
 class BlogListView(generic.ListView):
     model = Post
     template_name = "blog/blog_posts.html"
     context_object_name = "blogs"
+    paginate_by = 10
 
     def get_queryset(self):
         """ Order blog based on the published recently """
@@ -67,4 +76,29 @@ class BlogListView(generic.ListView):
         return post
 
         
+class BlogDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Post
+    template_name = "blog/blog_detail.html"
+    context_object_name = "blogs"
 
+class BlogUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Post
+    form_class = CreatePostForm
+    template_name = "blog/update_blog.html"
+
+    def get_queryset(self):
+        return self.model.objects.filter(author=self.request.user)
+
+    def get_success_url(self):
+        return reverse("blog-detail", kwargs={"pk": self.object.pk})
+    
+class BlogDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Post
+    template_name = "blog/delete_blog.html"
+    context_object_name = "blogs"
+    def get_queryset(self):
+        return self.model.objects.filter(author=self.request.user)
+    
+    def get_success_url(self):
+        return reverse("blogs")
+    

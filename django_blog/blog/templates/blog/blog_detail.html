@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ blogs.title }} | Django Blog{% endblock %}
+
+{% block sidebar %}
+    <h1><div class="form-title" style="margin-bottom: 0;">{{ blogs.title }}</div></h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-card">
+        <div class="profile-banner"></div>
+        
+        {% if blogs.image %}
+            <img src="{{ blogs.image.url }}" alt="{{ blogs.title }}" style="width:100%; max-width:340px; border-radius:12px; margin-bottom:18px;">
+        {% endif %}
+        <div style="color:#aaa; font-size:1em; margin-bottom:18px;">
+            By <strong>{{ blogs.author.username }}</strong> &middot; {{ blogs.published_date|date:"F j, Y, g:i a" }}
+        </div>
+        <div style="color:#fff; font-size:1.15em; margin-bottom:32px; text-align:left;">
+            {{ blogs.content|linebreaks }}
+        </div>
+        <!-- Dropdown for Edit/Delete -->
+        <div style="text-align:right; margin-bottom:24px;">
+            <div style="position:relative; display:inline-block;">
+                <button onclick="toggleDropdown()" style="background:#3578e5; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;">
+                    &#x22EE; Options
+                </button>
+                <div id="dropdownMenu" style="display:none; position:absolute; right:0; background:#222; border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); min-width:140px; z-index:10;">
+                    <a href="{% url 'update_blog' blogs.id %}" style="display:block; padding:12px 18px; color:#3578e5; text-decoration:none; border-bottom:1px solid #181818;">Edit Blog</a>
+                    <a href="{% url 'delete_blog' blogs.id %}" style="display:block; padding:12px 18px; color:#e53e3e; text-decoration:none;">Delete Blog</a>
+                </div>
+            </div>
+        </div>
+        <div class="extra">
+            <a href="{% url 'blogs' %}">Back to Blog Posts</a>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleDropdown() {
+        var menu = document.getElementById('dropdownMenu');
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+    // Optional: Hide dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        var menu = document.getElementById('dropdownMenu');
+        var button = event.target.closest('button');
+        if (!event.target.closest('#dropdownMenu') && !button) {
+            menu.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}
