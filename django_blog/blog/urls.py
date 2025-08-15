@@ -23,6 +23,6 @@ urlpatterns = [
     path("home/", home, name="home"),
     path("post/<int:pk>/detail/", PostDetailView.as_view(), name="blog-detail"),
     path("post/<int:pk>/update/", PostUpdateView.as_view(), name="update_blog"),
-    path("blog/<int:pk>/delete/", PostDeleteView.as_view(), name="delete_blog"),
+    path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="delete_blog"),
 
 ]
