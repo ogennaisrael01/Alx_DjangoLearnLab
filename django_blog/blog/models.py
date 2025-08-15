@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.conf import settings
+from django.contrib.auth.models import User
 
 class CustomUser(AbstractUser, PermissionsMixin):
     email = models.EmailField(max_length=150, unique=True, help_text="Required. Enter your Email")
