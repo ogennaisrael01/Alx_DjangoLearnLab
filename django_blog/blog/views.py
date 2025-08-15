@@ -44,7 +44,7 @@ class ViewProfile(LoginRequiredMixin, generic.ListView):
         return None
         
 
-class BlogCreateView(LoginRequiredMixin, generic.CreateView):
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
     form_class = CreatePostForm
     template_name = "blog/create_post.html"
@@ -64,7 +64,7 @@ class BlogCreateView(LoginRequiredMixin, generic.CreateView):
         return reverse("blogs")
     
 
-class BlogListView(generic.ListView):
+class PostListView(generic.ListView):
     model = Post
     template_name = "blog/blog_posts.html"
     context_object_name = "blogs"
@@ -76,12 +76,12 @@ class BlogListView(generic.ListView):
         return post
 
         
-class BlogDetailView(LoginRequiredMixin, generic.DetailView):
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
     template_name = "blog/blog_detail.html"
     context_object_name = "blogs"
 
-class BlogUpdateView(LoginRequiredMixin, generic.UpdateView):
+class PosrUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Post
     form_class = CreatePostForm
     template_name = "blog/update_blog.html"
@@ -92,7 +92,7 @@ class BlogUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse("blog-detail", kwargs={"pk": self.object.pk})
     
-class BlogDeleteView(LoginRequiredMixin, generic.DeleteView):
+class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Post
     template_name = "blog/delete_blog.html"
     context_object_name = "blogs"
