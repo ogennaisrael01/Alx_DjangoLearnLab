@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 
 class Author(models.Model):
@@ -19,4 +19,6 @@ class Book(models.Model):
     def __str__(self):
         """ Returns the string representation of the book. """
         return f"{self.title} by {self.author.name}"
+    def get_absolute_url(self):
+        return reverse("detail-view", args=[str(self.id)])
 

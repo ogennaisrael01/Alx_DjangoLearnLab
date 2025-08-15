@@ -29,9 +29,14 @@ class BookInputSerializer(serializers.Serializer):
         return value
 
 class BookSerializer(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
     class Meta:
         model = Book
-        fields = ["id", "title", "author", "publication_year"]
+        fields = ["url", "id", "title", "author", "publication_year"]
+
+    def get_url(self, obj):
+        """ Get the URL for the book detail view. """
+        return obj.get_absolute_url()
 
     def validate_publication_year(self, value):
         """Validate that the publication year is not greater than the current year."""
@@ -47,3 +52,5 @@ class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
         fields = ["name", "books", "id"]
+
+
