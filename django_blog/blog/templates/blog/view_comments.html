@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Comments for: {{ blogs.title }}</h2>
+    {% for comment in blogs.post_comment.all %}
+        <div class="comment">
+          <p><strong><a href="{% url 'profile' comment.author.id %}">{{ comment.author.username }}</a></strong> {{ comment.created_at }} </p>
+          <p>{{ comment.content }}</p> 
+        </div>
+        
+            <div style="text-align:right; margin-bottom:24px;">
+                 
+                    <div style="position:relative; display:inline-block;">
+                        {% if request.user == comment.author %}
+                            <button onclick="toggleDropdown()" style="background:#3578e5; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;">
+                                &#x22EE; Options
+                            </button>
+                            
+                                <div id="dropdownMenu" style="display:none; position:absolute; right:0; background:#222; border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); min-width:140px; z-index:10;">
+                                    <a href="{% url 'edit_comment' comment.id %}" style="display:block; padding:12px 18px; color:#3578e5; text-decoration:none; border-bottom:1px solid #181818;">Edit comment</a>
+                                    <a href="{% url 'delete_comment' comment.id %}" style="display:block; padding:12px 18px; color:#e53e3e; text-decoration:none;">Delete comment</a>
+                                </div>
+                        {% endif %}
+                    </div>
+                </div>
+    
+<script>
+    function toggleDropdown() {
+        var menu = document.getElementById('dropdownMenu');
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+    // Optional: Hide dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        var menu = document.getElementById('dropdownMenu');
+        var button = event.target.closest('button');
+        if (!event.target.closest('#dropdownMenu') && !button) {
+            menu.style.display = 'none';
+        }
+    });
+</script>
+    {% empty %}
+        <p>No comments yet. Be the first to add </p>
+    {% endfor %}
+</div>
+
+<!-- Move the comment link outside the container -->
+{% if blogs.id %}
+    <h3 style="margin-top:32px;"><a href="{% url 'create_comment' blogs.id %}" style="display:inline-block; padding:12px 18px; color:blue; text-decoration:none; border:1px solid #eee; border-radius:6px;">Comment</a></h3>
+{% else %}
+    <a href="{% url 'post' %}">Back to Blog posts</a>
+{% endif %}
+{% endblock %}

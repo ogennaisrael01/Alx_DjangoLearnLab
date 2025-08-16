@@ -3,7 +3,9 @@
 {% block title %}Welcome | Django Blog{% endblock %}
 {% block sidebar %}
     <p>
-        <span class="hero-title">Welcome to Django Blog</span><br>
+        <span class="hero-title">Human
+stories & ideas
+A place to read, write, and deepen your understanding</span><br>
         <span class="hero-subtitle">Share your stories, ideas, and expertise with the world.</span>
     </p>
 {% endblock %}
@@ -89,26 +91,30 @@
 </head>
 <body>
 <div class="container">
-    <div class="profile-card">
-        <div class="profile-banner"></div>
-        <div class="form-title" style="margin-bottom: 0;">Welcome to Django Blog</div>
-        <div style="margin-bottom: 32px;">
-            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80"
-                 alt="Blogging" style="width:100%; max-width:340px; border-radius:12px; box-shadow:0 4px 16px rgba(53,120,229,0.15);">
+    {% if not user.is_authenticated %}
+        <div class="profile-card">
+            <div class="profile-banner"></div>
+            <div class="form-title" style="margin-bottom: 0;">Start Reading</div>
+            <div style="margin-bottom: 32px;">
+                <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80"
+                    alt="Blogging" style="width:100%; max-width:340px; border-radius:12px; box-shadow:0 4px 16px rgba(53,120,229,0.15);">
+            </div>
+            <div class="profile-actions">
+                <a href="{% url 'register' %}">Get Started - Register</a>
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'blogs' %}">Browse Blog Posts</a>
+            </div>
+            <div style="margin-top:32px; color:#aaa; font-size:1em;">
+                <p>
+                    <span style="font-size:1.1em; color:#fff; font-weight:700;">Publish your passions, your way</span><br>
+                    <span style="color:#3578e5;">Create a unique and beautiful blog easily</span>
+                </p>
+            </div>
         </div>
-        <div class="profile-actions">
-            <a href="{% url 'register' %}">Get Started - Register</a>
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'blogs' %}">Browse Blog Posts</a>
-        </div>
-        <div style="margin-top:32px; color:#aaa; font-size:1em;">
-            <p>
-                <span style="font-size:1.1em; color:#fff; font-weight:700;">Publish your passions, your way</span><br>
-                <span style="color:#3578e5;">Create a unique and beautiful blog easily</span>
-            </p>
-        </div>
+        {% else %}
+            
+    {% endif %}
     </div>
-</div>
 </body>
 </html>
 {% endblock %}

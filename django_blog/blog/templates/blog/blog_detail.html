@@ -21,17 +21,30 @@
             {{ blogs.content|linebreaks }}
         </div>
         <!-- Dropdown for Edit/Delete -->
-        <div style="text-align:right; margin-bottom:24px;">
-            <div style="position:relative; display:inline-block;">
-                <button onclick="toggleDropdown()" style="background:#3578e5; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;">
-                    &#x22EE; Options
-                </button>
-                <div id="dropdownMenu" style="display:none; position:absolute; right:0; background:#222; border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); min-width:140px; z-index:10;">
-                    <a href="{% url 'update_blog' blogs.id %}" style="display:block; padding:12px 18px; color:#3578e5; text-decoration:none; border-bottom:1px solid #181818;">Edit Blog</a>
-                    <a href="{% url 'delete_blog' blogs.id %}" style="display:block; padding:12px 18px; color:#e53e3e; text-decoration:none;">Delete Blog</a>
+        {% if user.is_authenticated %}
+            <div style="text-align:right; margin-bottom:24px;">
+                <div style="position:relative; display:inline-block;">
+                    {% if blogs.author == request.user %}
+                        <button onclick="toggleDropdown()" style="background:#3578e5; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;">
+                            &#x22EE; Options
+                        </button>
+                        <div id="dropdownMenu" style="display:none; position:absolute; right:0; background:#222; border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); min-width:140px; z-index:10;">
+                            <a href="{% url 'update_blog' blogs.id %}" style="display:block; padding:12px 18px; color:#3578e5; text-decoration:none; border-bottom:1px solid #181818;">Edit Blog</a>
+                            <a href="{% url 'delete_blog' blogs.id %}" style="display:block; padding:12px 18px; color:#e53e3e; text-decoration:none;">Delete Blog</a>
+                            <a href="{% url 'create_comment' blogs.id %}" style="display:block; padding:12px 18px; color:blue; text-decoration:none;">Comment </a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-        </div>
+                <!-- Comments Section -->
+            <div class="comments-section" style="margin-top:32px; color:#fff;">
+                <a href="{% url 'view_comments' blogs.id %}">View Comments</a>
+                <h3> </h3>
+            </div>
+            {% else %}
+                <p style="color:#aaa;">You must be logged in to edit or delete this blog post.</p>  
+        {% endif %}
+    
         <div class="extra">
             <a href="{% url 'blogs' %}">Back to Blog Posts</a>
         </div>
