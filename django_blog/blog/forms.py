@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django import forms
-from blog.models import Post, Comment
+from blog.models import Post, Comment, Tag
 
 CustomUser = get_user_model()
 
@@ -33,9 +33,23 @@ class RegisterForm(UserCreationForm):
         return self.cleaned_data
 
 class CreatePostForm(forms.ModelForm):
+    # Create a tag field 
+
+    tags = forms.ModelMultipleChoiceField(Tag.objects.all(), required=False)
     class Meta:
         model = Post
-        fields = ['title', 'content', 'image']
+        fields = ['title', 'content', 'image', "tags"]
+
+    def clean_tags(self):
+        tags = self.cleaned_data["tags"]
+        for tag in tags:
+            if Post.objects.filter(tags__name=tag).exists():
+                raise forms.ValidationError(f"Tag '{tag}' already exists")
+        return tags
+
+    
+        
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
