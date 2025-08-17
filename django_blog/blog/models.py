@@ -24,6 +24,11 @@ class CustomUser(AbstractUser, PermissionsMixin):
             return self.get_full_name()
         return self.username or self.email
 
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
 
@@ -34,9 +39,11 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, 
                                on_delete=models.CASCADE, 
                                related_name="post")
+    tag = models.ManyToManyField(Tag, related_name="post_tag", )
     
     def __str__(self):
-        return self.tit
+        return self.title
+    
     def get_absloute_url(self):
         """ Returns a url of that blog object """
         url = reverse("blog-detail", args=[str(self.id)])
