@@ -12,6 +12,8 @@
     <div class="profile-card">
         <div class="profile-banner"></div>
         <div class="form-title">Recent Blog Posts</div>
+    
+        
         {% if blogs %}
             {% for post in blogs %}
                 <div style="background:#181818; border-radius:12px; margin-bottom:24px; padding:18px; text-align:left;">
@@ -27,9 +29,13 @@
         {% else %}
             <p style="color:#fff;">No blog posts available.</p>
         {% endif %}
+        
         <div class="extra">
             {% if user.is_authenticated %}
                 <a href="{% url 'create_blog' %}">Create New Post</a>
+                <div style="background:#181818; border-radius:12px; margin-bottom:24px; padding:18px; text-align:right;">
+                    <a href="{% url 'search' %}">Search Posts</a>
+                </div>
             {% else %}
                 <p style="color:#fff;">Please <a href="{% url 'login' %}">login</a> to create a new post.</p>
             {% endif %}

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from blog.forms import RegisterForm, CreatePostForm, CommentForm
+from blog.forms import RegisterForm, CreatePostForm, CommentForm, SearchForm
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from blog.models import Post, Comment
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 
 
@@ -34,6 +35,26 @@ def register(request):
         "form": form
     })
 
+def search_view(request):
+    """ A view for searching for blog post"""
+
+    if request.method == "GET":
+        form = SearchForm(request.GET)
+        query = request.GET.get("title")
+        tag = request.GET.get("tag")
+        posts = Post.objects.none()
+        if form.is_valid():
+            if query:
+                posts = Post.objects.filter(Q(title__icontains=query))
+            if tag:
+                posts = Post.objects.filter(Q(tag__name__iexact=tag))
+            
+        return render(request, "blog/search.html", context={
+            "posts": posts, 
+            "form": form, 
+            }
+            )
+    
 
 # User profile view, only accessible to logged-in users
 class ProfileView(LoginRequiredMixin, generic.ListView):
@@ -76,9 +97,10 @@ class PostListView(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        """Order blogs based on the most recent published date"""
-        post = self.model.objects.all().order_by("-published_date")
-        return post
+        """Get the list of blog posts, orders by the most recent post"""
+        posts = self.model.objects.all().order_by("-published_date")
+    
+        return posts
 
         
 

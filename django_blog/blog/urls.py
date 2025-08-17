@@ -13,7 +13,8 @@ from blog.views import (
     CommentCreateView,
     ViewCommentsDetailView,
     CommentUpdateView,
-    CommentDeleteView
+    CommentDeleteView,
+    search_view  # Add the search view import
    )
 
 
@@ -31,7 +32,7 @@ urlpatterns = [
     path("comment/<int:pk>/new/", CommentCreateView.as_view(), name="create_comment"),
     path("post/<int:pk>/comments/new/", ViewCommentsDetailView.as_view(), name="view_comments"),
     path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="edit_comment"),
-    path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="delete_comment")
-    
+    path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="delete_comment"),
+    path("search/", search_view, name="search"),
 
 ]

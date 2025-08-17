@@ -6,16 +6,7 @@ from blog.models import Post, Comment, Tag
 CustomUser = get_user_model()
 
 class RegisterForm(UserCreationForm):
-    # password1 = forms.CharField(
-    #     label="Password",
-    #     widget=forms.PasswordInput,
-    #     help_text="Enter a strong password.",
-    # )
-    # password2 = forms.CharField(
-    #     label="Confirm Password",
-    #     widget=forms.PasswordInput,
-    #     help_text="Enter the same password as above, for verification.",
-    # )
+   
     class Meta:
         model = CustomUser
         fields = ["email", "username", "password1", "password2"]
@@ -38,7 +29,7 @@ class CreatePostForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(Tag.objects.all(), required=False)
     class Meta:
         model = Post
-        fields = ['title', 'content', 'image', "tags"]
+        fields = ['title', 'content', 'image']
 
     def clean_tags(self):
         tags = self.cleaned_data["tags"]
@@ -46,10 +37,6 @@ class CreatePostForm(forms.ModelForm):
             if Post.objects.filter(tags__name=tag).exists():
                 raise forms.ValidationError(f"Tag '{tag}' already exists")
         return tags
-
-    
-        
-
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -67,3 +54,8 @@ class CommentForm(forms.ModelForm):
         return content
     
         
+class SearchForm(forms.ModelForm):
+    tags = forms.CharField(max_length=100)
+    class Meta:
+        model = Post
+        fields = ["title"]
