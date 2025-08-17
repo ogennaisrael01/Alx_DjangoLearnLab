@@ -150,7 +150,7 @@ class ViewCommentsDetailView(LoginRequiredMixin, generic.DetailView):
     paginate_by = 5
 
 # VIew for Editing comment, only by the author
-class CommentEditView(LoginRequiredMixin, generic.UpdateView):
+class CommentUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = "blog/edit_comment.html"
