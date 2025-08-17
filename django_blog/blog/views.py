@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from blog.models import Post, Comment
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.http import HttpResponse
 
 
 
@@ -51,7 +52,7 @@ def search_view(request):
             
         return render(request, "blog/search.html", context={
             "posts": posts, 
-            "form": form, 
+            "form": form,
             }
             )
     

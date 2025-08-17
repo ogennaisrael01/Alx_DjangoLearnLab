@@ -26,15 +26,15 @@ class RegisterForm(UserCreationForm):
 class CreatePostForm(forms.ModelForm):
     # Create a tag field 
 
-    tags = forms.ModelMultipleChoiceField(Tag.objects.all(), required=False)
+    tag = forms.ModelMultipleChoiceField(Tag.objects.all(), required=False)
     class Meta:
         model = Post
         fields = ['title', 'content', 'image']
 
-    def clean_tags(self):
-        tags = self.cleaned_data["tags"]
+    def clean_tag(self):
+        tags = self.cleaned_data["tag"]
         for tag in tags:
-            if Post.objects.filter(tags__name=tag).exists():
+            if Post.objects.filter(tag__name=tag).exists():
                 raise forms.ValidationError(f"Tag '{tag}' already exists")
         return tags
 
@@ -55,7 +55,7 @@ class CommentForm(forms.ModelForm):
     
         
 class SearchForm(forms.ModelForm):
-    tags = forms.CharField(max_length=100)
+    # tag = forms.CharField(max_length=100)
     class Meta:
         model = Post
         fields = ["title"]
