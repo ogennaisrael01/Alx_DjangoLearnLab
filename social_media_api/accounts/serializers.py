@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 User = get_user_model()
 
 Token.objects.create()
+serializers.CharField()
 class RegistrationSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     password = serializers.CharField(max_length=50)
