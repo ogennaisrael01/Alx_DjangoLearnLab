@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 
-class Posts(models.Model):
+class Post(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts", on_delete=models.CASCADE)
     content = models.TextField()
@@ -16,7 +16,7 @@ class Posts(models.Model):
         return reverse("post-detail", args=str(self["pk"]))
     
 class Comments(models.Model):
-    post = models.ForeignKey(Posts, related_name="comments", on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments", on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
