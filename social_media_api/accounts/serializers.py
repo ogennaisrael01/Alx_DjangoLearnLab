@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-
+from rest_framework.authtoken.models import Token
 User = get_user_model()
 
+Token.objects.create()
 class RegistrationSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     password = serializers.CharField(max_length=50)
@@ -21,7 +22,7 @@ class RegistrationSerializer(serializers.Serializer):
         """Create a new user"""
         if not validated_data:
             raise serializers.ValidationError("No Data provided")
-        return User.objects.create_user(
+        return get_user_model().objects.create_user(
             email = validated_data.get("email"),
             password = validated_data.get("password"),
             first_name=validated_data.get("first_name"),
@@ -44,3 +45,7 @@ class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     password = serializers.CharField(max_length=100, write_only=True)
     
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "email", "first_name", "last_name", "username"]
