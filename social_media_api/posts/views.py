@@ -13,7 +13,7 @@ from rest_framework import pagination
 
 class PostApiView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
-    queryset = Posts.objects.all()
+    queryset = Post.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ["title", "content"]
     search_fields = ["title"]
@@ -84,7 +84,7 @@ class PostApiView(viewsets.ModelViewSet):
             return None
         
 class CommentCreateApiView(generics.CreateAPIView):
-    queryset = Comments.objects.all()
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated]
     
